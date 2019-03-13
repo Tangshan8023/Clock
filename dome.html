@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+        }
+        #warp {
+            width: 200px;
+            height: 200px;
+            background-color: #eeeeee;
+            margin: 100px auto;
+            position: relative;
+        }
+        #hore{
+            width: 4px;
+            height: 56px;
+            background-color: green;
+            position: absolute;
+            top: 54px;
+            left: 98px;
+            transform-origin: 2px 60px;
+        }
+        #min{
+            width: 3px;
+            height: 78px;
+            background-color: greenyellow;
+            position: absolute;
+            top: 32px;
+            left: 98.5px;
+            transform-origin: 1.5px 70px;
+        }
+        #sec{
+            width: 2px;
+            height: 92px;
+            background-color: deeppink;
+            position: absolute;
+            top: 18px;
+            left: 99px;
+            transform-origin: 1px 82px;
+        }
+        #icon{
+            width: 10px;
+            height: 10px;
+            background-color: black;
+            border-radius: 5px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        #list{
+            list-style: none;
+            width: 200px;
+            height: 200px;
+            position: relative;
+        }
+        #list li{
+            position: absolute;
+            width: 2px;
+            height: 4px;
+            background-color: black;
+            top: 0;
+            left: 99px;
+            transform-origin: 1px 100px;
+        }
+        #list li:nth-child(5n+1){
+            width: 4px;
+            height: 6px;
+            transform-origin: 2px 100px;
+            counter-increment: num;
+        }
+        #list li:nth-child(5n):after{
+            content: counter(num);
+            display: inline-block;
+            margin-top: 10px;
+            margin-left: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div id="warp">
+        <ul id="list">
+            <!--刻度-->
+        </ul>
+        <div id="hore"></div>
+        <div id="min"></div>
+        <div id="sec"></div>
+        <div id="icon"></div>
+    </div>
+    <script>
+        var list = document.getElementById("list");
+        var num = 60;
+        for(var i=0; i<num; i++){
+            var li = document.createElement("li");
+            li.style.transform = "rotate("+i*6+"deg)";
+            list.appendChild(li);
+        }
+
+        var hores = document.getElementById("hore");
+        var mins = document.getElementById("min");
+        var sec = document.getElementById("sec");
+        secondReading();
+        function secondReading() {
+            var times = new Date();
+            var secs = times.getSeconds();
+            var min = times.getMinutes();
+            var hore = times.getHours();
+            min = min + secs/60;
+            hore = hore + min/60;
+            setTimeout(function () {
+                hores.style.transform = "rotate("+30*hore+"deg)";
+                mins.style.transform = "rotate("+min*6+"deg)";
+                sec.style.transform = "rotate("+secs*6+"deg)";
+                secondReading();
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
